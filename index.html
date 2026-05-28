@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для моей девочки 💖</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+body{
+    overflow:hidden;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #ff9ecf, #ff6fae, #ffb6d9, #ff85b8);
+    position:relative;
+}
+/* АНИМАЦИЯ ФОНА */
+body::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background: radial-gradient(rgba(255,255,255,0.15), transparent 60%);
+    animation:bgMove 12s linear infinite;
+}
+@keyframes bgMove{
+    0%{ transform:translate(-10%,-10%) rotate(0deg); }
+    100%{ transform:translate(-20%,-20%) rotate(360deg); }
+}
+/* КАРТОЧКА */
+.card{
+    position:relative;
+    width:90%;
+    max-width:420px;
+    padding:30px 25px;
+    border-radius:35px;
+    text-align:center;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 0 40px rgba(255,0,120,0.3);
+    z-index:5;
+}
+/* ЗАГОЛОВОК */
+.title{
+    font-size:32px;
+    color:white;
+    margin-bottom:15px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
+}
+/* СЛАЙДЕР С ФОТОГРАФИЯМИ */
+.photo-slider{
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid white;
+    box-shadow: 0 0 25px rgba(255, 20, 147, 0.6);
+}
+.photo-slider img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.photo-slider img.active{
+    opacity: 1;
+}
+/* ТЕКСТ */
+.subtitle{
+    font-size:18px;
+    color:#fff0f7;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+/* ПОЦЕЛУЙ */
+.kiss{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:90px;
+    cursor:pointer;
+    z-index:20;
+    animation:pulse 2s infinite;
+    user-select: none;
+}
+@keyframes pulse{
+    0%{ transform:translateX(-50%) scale(1); }
+    50%{ transform:translateX(-50%) scale(1.15); }
+    100%{ transform:translateX(-50%) scale(1); }
+}
+/* СЕРДЦА */
+.heart{
+    position:absolute;
+    color:rgba(255,255,255,0.5);
+    animation:fall linear infinite;
+    user-select:none;
+}
+@keyframes fall{
+    0%{ transform: translateY(-10vh) rotate(0deg); opacity:0; }
+    10% { opacity:1; }
+    100%{ transform: translateY(110vh) rotate(360deg); opacity:0; }
+}
+/* НАДПИСЬ ПОСЛЕ КЛИКА */
+#loveText{
+    margin-top:15px;
+    font-size:22px;
+    color:white;
+    opacity:0;
+    transition:1s;
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+.show{ opacity:1 !important; }
+
+/* ТЕЛЕФОН */
+@media(max-width:480px){
+    .title{ font-size:28px; }
+    .subtitle{ font-size:16px; }
+    .kiss{ font-size:75px; }
+    .photo-slider { width: 150px; height: 150px; }
+}
+</style>
+</head>
+<body>
+
+<!-- МУЗЫКА -->
+<audio id="music" preload="auto" playsinline webkit-playsinline>
+    <source src="./romans.mp3" type="audio/mpeg">
+</audio>
+
+<!-- КАРТОЧКА -->
+<div class="card">
+    <div class="title">Для моей девочки 💖</div>
+    
+    <!-- Контейнер для твоих фото -->
+    <div class="photo-slider">
+        <img src="./img1.jpg" class="active" alt="Фото 1">
+        <img src="./img2.jpg" alt="Фото 2">
+        <img src="./img3.jpg" alt="Фото 3">
+        <img src="./img4.jpg" alt="Фото 4">
+        <img src="./img5.jpg" alt="Фото 5">
+        <img src="./img6.jpg" alt="Фото 6">
+        <img src="./img7.jpg" alt="Фото 7">
+        <img src="./img8.jpg" alt="Фото 8">
+    </div>
+
+    <div class="subtitle">
+        Ты — самое прекрасное, что случалось со мной ✨
+    </div>
+    <div id="loveText">
+        Я тебя люблю очень сильно 😘❤️
+    </div>
+</div>
+
+<!-- ПОЦЕЛУЙ -->
+<div class="kiss" onclick="startLove()">💋</div>
+
+<script>
+/* ЗАПУСК МУЗЫКИ И ТЕКСТА */
+async function startLove(){
+    const music = document.getElementById("music");
+    const loveText = document.getElementById("loveText");
+    try{
+        music.currentTime = 0;
+        await music.play();
+    }catch(err){
+        console.log(err);
+    }
+    loveText.classList.add("show");
+}
+
+/* СКРИПТ СЛАЙДЕРА ФОТО */
+const images = document.querySelectorAll('.photo-slider img');
+let currentImgIndex = 0;
+
+setInterval(() => {
+    images[currentImgIndex].classList.remove('active');
+    currentImgIndex = (currentImgIndex + 1) % images.length;
+    images[currentImgIndex].classList.add('active');
+}, 3000); // Фотографии меняются каждые 3 секунды
+
+/* ПАДАЮЩИЕ СЕРДЕЧКИ */
+for(let i = 0; i < 45; i++){
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (15 + Math.random()*35) + "px";
+    heart.style.animationDuration = (4 + Math.random()*6) + "s";
+    heart.style.animationDelay = Math.random()*5 + "s";
+    document.body.appendChild(heart);
+}
+</script>
+</body>
+</html>
