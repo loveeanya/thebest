@@ -55,13 +55,13 @@ body::before{
     margin-bottom:15px;
     text-shadow: 0 0 10px rgba(255,255,255,0.7);
 }
-/* СЛАЙДЕР С ФОТОГРАФИЯМИ */
+/* ИЗМЕНЕНО: КВАДРАТНЫЙ СЛАЙДЕР С ФОТОГРАФИЯМИ */
 .photo-slider{
     position: relative;
     width: 180px;
     height: 180px;
     margin: 0 auto 20px auto;
-    border-radius: 50%;
+    border-radius: 25px; /* Скругленный квадратик */
     overflow: hidden;
     border: 4px solid white;
     box-shadow: 0 0 25px rgba(255, 20, 147, 0.6);
@@ -79,12 +79,16 @@ body::before{
 .photo-slider img.active{
     opacity: 1;
 }
-/* ТЕКСТ */
+/* СЛОВА ПЕСНИ (СУБТИТРЫ) */
 .subtitle{
     font-size:18px;
     color:#fff0f7;
     line-height:1.5;
     margin-bottom:20px;
+    min-height: 54px; /* Фиксирует высоту, чтобы карточка не прыгала */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /* ПОЦЕЛУЙ */
 .kiss{
@@ -146,7 +150,6 @@ body::before{
 <div class="card">
     <div class="title">Для моей девочки 💖</div>
     
-    <!-- Контейнер для твоих фото -->
     <div class="photo-slider">
         <img src="./img1.jpg" class="active" alt="Фото 1">
         <img src="./img2.jpg" alt="Фото 2">
@@ -158,9 +161,11 @@ body::before{
         <img src="./img8.jpg" alt="Фото 8">
     </div>
 
-    <div class="subtitle">
+    <!-- Сюда будут динамически подставляться ваши строки -->
+    <div class="subtitle" id="lyricsText">
         Ты — самое прекрасное, что случалось со мной ✨
     </div>
+    
     <div id="loveText">
         Я тебя люблю очень сильно 😘❤️
     </div>
@@ -170,10 +175,12 @@ body::before{
 <div class="kiss" onclick="startLove()">💋</div>
 
 <script>
+const music = document.getElementById("music");
+const loveText = document.getElementById("loveText");
+const lyricsText = document.getElementById("lyricsText");
+
 /* ЗАПУСК МУЗЫКИ И ТЕКСТА */
 async function startLove(){
-    const music = document.getElementById("music");
-    const loveText = document.getElementById("loveText");
     try{
         music.currentTime = 0;
         await music.play();
@@ -183,6 +190,69 @@ async function startLove(){
     loveText.classList.add("show");
 }
 
+/* ИЗМЕНЕНО: СИНХРОНИЗАЦИЯ СЛОВ ПЕСНИ */
+// Впишите сюда время в секундах, когда должна появиться строка
+const lyrics = [
+    time:0.0,
+    text:"В свете фонаря блестит асфальт… ✨"
+},
+
+{
+    time:3.0,
+    text:"Я люблю тебя — ты просто знай… 💖"
+},
+
+{
+    time:7.15,
+    text:"Сдаётся мне, теперь это надолго… 🌙"
+},
+
+{
+    time:10.30,
+    text:"Гори… Гори, не догорай… 🔥"
+},
+
+{
+    time:12.15,
+    text:"Без тебя жизни нет — я не могу найти… 💔"
+},
+
+{
+    time:15.30,
+    text:"Сколько не жмись к стене, сквозь неё не пройти… 🥀"
+},
+
+{
+    time:18.50,
+    text:"Ни одного пути грешной души в зиме… ❄️"
+},
+
+{
+    time:21.80,
+    text:"Без тебя смысла нет; без тебя жизни нет… ❤️"
+},
+
+{
+    time:24.0,
+    text:"Я тебя люблю очень сильно, моя девочка 😘❤️
+    // Добавляйте новые строки по аналогии выше
+];
+
+music.addEventListener("timeupdate", () => {
+    const curTime = music.currentTime;
+    let activeText = lyrics[0].text;
+    
+    for (let i = 0; i < lyrics.length; i++) {
+        if (curTime >= lyrics[i].time) {
+            activeText = lyrics[i].text;
+        }
+    }
+    
+    if (lyricsText.innerHTML !== activeText) {
+        lyricsText.innerHTML = activeText;
+    }
+});
+
 /* СКРИПТ СЛАЙДЕРА ФОТО */
 const images = document.querySelectorAll('.photo-slider img');
 let currentImgIndex = 0;
@@ -191,7 +261,7 @@ setInterval(() => {
     images[currentImgIndex].classList.remove('active');
     currentImgIndex = (currentImgIndex + 1) % images.length;
     images[currentImgIndex].classList.add('active');
-}, 3000); // Фотографии меняются каждые 3 секунды
+}, 3000);
 
 /* ПАДАЮЩИЕ СЕРДЕЧКИ */
 for(let i = 0; i < 45; i++){
