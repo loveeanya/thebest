@@ -55,13 +55,13 @@ body::before{
     margin-bottom:15px;
     text-shadow: 0 0 10px rgba(255,255,255,0.7);
 }
-/* ИЗМЕНЕНО: КВАДРАТНЫЙ СЛАЙДЕР С ФОТОГРАФИЯМИ */
+/* ИЗМЕНЕНО: КРАСИВЫЙ ПРЯМОУГОЛЬНИК С ФОТОГРАФИЯМИ */
 .photo-slider{
     position: relative;
-    width: 180px;
-    height: 180px;
+    width: 240px; /* Увеличена ширина для прямоугольного формата */
+    height: 320px; /* Увеличена высота под вертикальные селфи */
     margin: 0 auto 20px auto;
-    border-radius: 25px; /* Скругленный квадратик */
+    border-radius: 25px; /* Мягкие скругленные углы */
     overflow: hidden;
     border: 4px solid white;
     box-shadow: 0 0 25px rgba(255, 20, 147, 0.6);
@@ -85,7 +85,7 @@ body::before{
     color:#fff0f7;
     line-height:1.5;
     margin-bottom:20px;
-    min-height: 54px; /* Фиксирует высоту, чтобы карточка не прыгала */
+    min-height: 54px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -135,7 +135,7 @@ body::before{
     .title{ font-size:28px; }
     .subtitle{ font-size:16px; }
     .kiss{ font-size:75px; }
-    .photo-slider { width: 150px; height: 150px; }
+    .photo-slider { width: 200px; height: 266px; }
 }
 </style>
 </head>
@@ -153,17 +153,17 @@ body::before{
     <div class="photo-slider">
         <img src="./img1.jpg" class="active" alt="Фото 1">
         <img src="./img2.jpg" alt="Фото 2">
-        <img src="./img3.jpg" alt="Фото 3">
-        <img src="./img4.jpg" alt="Фото 4">
-        <img src="./img5.jpg" alt="Фото 5">
-        <img src="./img6.jpg" alt="Фото 6">
-        <img src="./img7.jpg" alt="Фото 7">
-        <img src="./img8.jpg" alt="Фото 8">
+        <img src="./img3.jpg" alt="Фото 2">
+        <img src="./img4.jpg" alt="Фото 3">
+        <img src="./img5.jpg" alt="Фото 4">
+        <img src="./img6.jpg" alt="Фото 5">
+        <img src="./img7.jpg" alt="Фото 6">
+        <img src="./img8.jpg" alt="Фото 7">
     </div>
 
-    <!-- Сюда будут динамически подставляться ваши строки -->
+    <!-- Сюда динамически подставляются строки песни -->
     <div class="subtitle" id="lyricsText">
-        Ты — самое прекрасное, что случалось со мной ✨
+        Нажми на 💋 внизу экрана... ✨
     </div>
     
     <div id="loveText">
@@ -190,57 +190,49 @@ async function startLove(){
     loveText.classList.add("show");
 }
 
-/* ИЗМЕНЕНО: СИНХРОНИЗАЦИЯ СЛОВ ПЕСНИ */
-// Впишите сюда время в секундах, когда должна появиться строка
+/* ИСПРАВЛЕНО: СИНХРОНИЗАЦИЯ СЛОВ ПЕСНИ С ПРАВИЛЬНЫМ СИНТАКСИСОМ */
 const lyrics = [
-    time:0.0,
-    text:"В свете фонаря блестит асфальт… ✨"
-},
-
-{
-    time:3.0,
-    text:"Я люблю тебя — ты просто знай… 💖"
-},
-
-{
-    time:7.15,
-    text:"Сдаётся мне, теперь это надолго… 🌙"
-},
-
-{
-    time:10.30,
-    text:"Гори… Гори, не догорай… 🔥"
-},
-
-{
-    time:12.15,
-    text:"Без тебя жизни нет — я не могу найти… 💔"
-},
-
-{
-    time:15.30,
-    text:"Сколько не жмись к стене, сквозь неё не пройти… 🥀"
-},
-
-{
-    time:18.50,
-    text:"Ни одного пути грешной души в зиме… ❄️"
-},
-
-{
-    time:21.80,
-    text:"Без тебя смысла нет; без тебя жизни нет… ❤️"
-},
-
-{
-    time:24.0,
-    text:"Я тебя люблю очень сильно, моя девочка 😘❤️
-    // Добавляйте новые строки по аналогии выше
+    {
+        time: 0.0,
+        text: "В свете фонаря блестит асфальт… ✨"
+    },
+    {
+        time: 3.0,
+        text: "Я люблю тебя — ты просто знай… 💖"
+    },
+    {
+        time: 7.15,
+        text: "Сдаётся мне, теперь это надолго… 🌙"
+    },
+    {
+        time: 10.3,
+        text: "Гори… Гори, не догорай… 🔥"
+    },
+    {
+        time: 12.15,
+        text: "Без тебя жизни нет — я не могу найти… 💔"
+    },
+    {
+        time: 15.3,
+        text: "Сколько не жмись к стене, сквозь неё не пройти… 🥀"
+    },
+    {
+        time: 18.5,
+        text: "Ни одного пути грешной души в зиме… ❄️"
+    },
+    {
+        time: 21.8,
+        text: "Без тебя смысла нет; без тебя жизни нет… ❤️"
+    },
+    {
+        time: 24.0,
+        text: "Я тебя люблю очень сильно, моя девочка 😘❤️"
+    }
 ];
 
 music.addEventListener("timeupdate", () => {
     const curTime = music.currentTime;
-    let activeText = lyrics[0].text;
+    let activeText = "Нажми на 💋 внизу экрана... ✨";
     
     for (let i = 0; i < lyrics.length; i++) {
         if (curTime >= lyrics[i].time) {
