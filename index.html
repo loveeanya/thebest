@@ -33,12 +33,22 @@ body::before{
     0%{ transform:translate(-10%,-10%) rotate(0deg); }
     100%{ transform:translate(-20%,-20%) rotate(360deg); }
 }
+/* ОБЩИЙ КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ И СБОРОК */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 420px;
+    z-index: 5;
+    gap: 15px; /* Небольшой отступ между карточкой и поцелуем */
+}
 /* КАРТОЧКА */
 .card{
     position:relative;
     width:90%;
-    max-width:420px;
-    padding:30px 25px;
+    padding:25px 20px;
     border-radius:35px;
     text-align:center;
     background:rgba(255,255,255,0.15);
@@ -46,22 +56,21 @@ body::before{
     -webkit-backdrop-filter:blur(15px);
     border:1px solid rgba(255,255,255,0.25);
     box-shadow: 0 0 40px rgba(255,0,120,0.3);
-    z-index:5;
 }
 /* ЗАГОЛОВОК */
 .title{
-    font-size:32px;
+    font-size:28px;
     color:white;
     margin-bottom:15px;
     text-shadow: 0 0 10px rgba(255,255,255,0.7);
 }
-/* ИЗМЕНЕНО: КРАСИВЫЙ ПРЯМОУГОЛЬНИК С ФОТОГРАФИЯМИ */
+/* ПРЯМОУГОЛЬНИК С ФОТОГРАФИЯМИ */
 .photo-slider{
     position: relative;
-    width: 240px; /* Увеличена ширина для прямоугольного формата */
-    height: 320px; /* Увеличена высота под вертикальные селфи */
-    margin: 0 auto 20px auto;
-    border-radius: 25px; /* Мягкие скругленные углы */
+    width: 200px; /* Слегка уменьшили для мобильных, чтобы точно всё влезло */
+    height: 270px; 
+    margin: 0 auto 15px auto;
+    border-radius: 25px; 
     overflow: hidden;
     border: 4px solid white;
     box-shadow: 0 0 25px rgba(255, 20, 147, 0.6);
@@ -81,31 +90,37 @@ body::before{
 }
 /* СЛОВА ПЕСНИ (СУБТИТРЫ) */
 .subtitle{
-    font-size:18px;
+    font-size:17px;
     color:#fff0f7;
-    line-height:1.5;
-    margin-bottom:20px;
-    min-height: 54px;
+    line-height:1.4;
+    margin-bottom:10px;
+    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-/* ПОЦЕЛУЙ */
+/* НАДПИСЬ ПОСЛЕ КЛИКА */
+#loveText{
+    font-size:20px;
+    color:white;
+    opacity:0;
+    transition:1s;
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+.show{ opacity:1 !important; }
+
+/* ИСПРАВЛЕНО: КНОПКА ПОЦЕЛУЯ ТЕПЕРЬ ВСЕГДА ТУТ */
 .kiss{
-    position:fixed;
-    bottom:30px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:90px;
+    font-size:75px;
     cursor:pointer;
-    z-index:20;
     animation:pulse 2s infinite;
     user-select: none;
+    line-height: 1;
 }
 @keyframes pulse{
-    0%{ transform:translateX(-50%) scale(1); }
-    50%{ transform:translateX(-50%) scale(1.15); }
-    100%{ transform:translateX(-50%) scale(1); }
+    0%{ transform: scale(1); }
+    50%{ transform: scale(1.15); }
+    100%{ transform: scale(1); }
 }
 /* СЕРДЦА */
 .heart{
@@ -119,23 +134,13 @@ body::before{
     10% { opacity:1; }
     100%{ transform: translateY(110vh) rotate(360deg); opacity:0; }
 }
-/* НАДПИСЬ ПОСЛЕ КЛИКА */
-#loveText{
-    margin-top:15px;
-    font-size:22px;
-    color:white;
-    opacity:0;
-    transition:1s;
-    text-shadow: 0 0 5px rgba(255,255,255,0.5);
-}
-.show{ opacity:1 !important; }
 
-/* ТЕЛЕФОН */
-@media(max-width:480px){
-    .title{ font-size:28px; }
-    .subtitle{ font-size:16px; }
-    .kiss{ font-size:75px; }
-    .photo-slider { width: 200px; height: 266px; }
+/* ОПТИМИЗАЦИЯ ДЛЯ СОВСЕМ МАЛЕНЬКИХ ТЕЛЕФОНОВ */
+@media(max-height: 650px){
+    .title{ font-size:24px; }
+    .photo-slider { width: 160px; height: 215px; }
+    .subtitle{ font-size:15px; }
+    .kiss{ font-size:60px; }
 }
 </style>
 </head>
@@ -146,33 +151,37 @@ body::before{
     <source src="./romans.mp3" type="audio/mpeg">
 </audio>
 
-<!-- КАРТОЧКА -->
-<div class="card">
-    <div class="title">Для моей девочки 💖</div>
-    
-    <div class="photo-slider">
-        <img src="./img1.jpg" class="active" alt="Фото 1">
-        <img src="./img2.jpg" alt="Фото 2">
-        <img src="./img3.jpg" alt="Фото 2">
-        <img src="./img4.jpg" alt="Фото 3">
-        <img src="./img5.jpg" alt="Фото 4">
-        <img src="./img6.jpg" alt="Фото 5">
-        <img src="./img7.jpg" alt="Фото 6">
-        <img src="./img8.jpg" alt="Фото 7">
+<!-- ОБЩИЙ КОНТЕЙНЕР -->
+<div class="main-container">
+
+    <!-- КАРТОЧКА -->
+    <div class="card">
+        <div class="title">Для моей девочки 💖</div>
+        
+        <div class="photo-slider">
+            <img src="./img1.jpg" class="active" alt="Фото 1">
+            <img src="./img2.jpg" alt="Фото 2">
+            <img src="./img3.jpg" alt="Фото 3">
+            <img src="./img4.jpg" alt="Фото 4">
+            <img src="./img5.jpg" alt="Фото 5">
+            <img src="./img6.jpg" alt="Фото 6">
+            <img src="./img7.jpg" alt="Фото 7">
+            <img src="./img8.jpg" alt="Фото 8">
+        </div>
+
+        <div class="subtitle" id="lyricsText">
+            Нажми на 💋 внизу экрана... ✨
+        </div>
+        
+        <div id="loveText">
+            Я тебя люблю очень сильно 😘❤️
+        </div>
     </div>
 
-    <!-- Сюда динамически подставляются строки песни -->
-    <div class="subtitle" id="lyricsText">
-        Нажми на 💋 внизу экрана... ✨
-    </div>
-    
-    <div id="loveText">
-        Я тебя люблю очень сильно 😘❤️
-    </div>
+    <!-- ПОЦЕЛУЙ (ТЕПЕРЬ СРАЗУ ПОД КАРТОЧКОЙ) -->
+    <div class="kiss" onclick="startLove()">💋</div>
+
 </div>
-
-<!-- ПОЦЕЛУЙ -->
-<div class="kiss" onclick="startLove()">💋</div>
 
 <script>
 const music = document.getElementById("music");
@@ -190,44 +199,17 @@ async function startLove(){
     loveText.classList.add("show");
 }
 
-/* ИСПРАВЛЕНО: СИНХРОНИЗАЦИЯ СЛОВ ПЕСНИ С ПРАВИЛЬНЫМ СИНТАКСИСОМ */
+/* СИНХРОНИЗАЦИЯ СЛОВ ПЕСНИ */
 const lyrics = [
-    {
-        time: 0.0,
-        text: "В свете фонаря блестит асфальт… ✨"
-    },
-    {
-        time: 3.0,
-        text: "Я люблю тебя — ты просто знай… 💖"
-    },
-    {
-        time: 7.15,
-        text: "Сдаётся мне, теперь это надолго… 🌙"
-    },
-    {
-        time: 10.3,
-        text: "Гори… Гори, не догорай… 🔥"
-    },
-    {
-        time: 12.15,
-        text: "Без тебя жизни нет — я не могу найти… 💔"
-    },
-    {
-        time: 15.3,
-        text: "Сколько не жмись к стене, сквозь неё не пройти… 🥀"
-    },
-    {
-        time: 18.5,
-        text: "Ни одного пути грешной души в зиме… ❄️"
-    },
-    {
-        time: 21.8,
-        text: "Без тебя смысла нет; без тебя жизни нет… ❤️"
-    },
-    {
-        time: 24.0,
-        text: "Я тебя люблю очень сильно, моя девочка 😘❤️"
-    }
+    { time: 0.0, text: "В свете фонаря блестит асфальт… " },
+    { time: 3.0, text: "Я люблю тебя — ты просто знай… 💖" },
+    { time: 7.15, text: "Сдаётся мне, теперь это надолго… " },
+    { time: 10.3, text: "Гори… Гори, не догорай… " },
+    { time: 12.15, text: "Без тебя жизни нет — я не могу найти… " },
+    { time: 15.3, text: "Сколько не жмись к стене, сквозь неё не пройти… " },
+    { time: 18.5, text: "Ни одного пути грешной души в зиме… " },
+    { time: 21.8, text: "Без тебя смысла нет; без тебя жизни нет… ❤️" },
+    { time: 24.0, text: "Я тебя люблю очень сильно, моя девочка 😘❤️" }
 ];
 
 music.addEventListener("timeupdate", () => {
