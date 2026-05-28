@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Любимой💖</title>
+<title>Для моей девочки 💖</title>
 <style>
 *{
     margin:0;
@@ -42,7 +42,7 @@ body::before{
     width: 100%;
     max-width: 420px;
     z-index: 5;
-    gap: 15px; /* Небольшой отступ между карточкой и поцелуем */
+    gap: 15px;
 }
 /* КАРТОЧКА */
 .card{
@@ -67,7 +67,7 @@ body::before{
 /* ПРЯМОУГОЛЬНИК С ФОТОГРАФИЯМИ */
 .photo-slider{
     position: relative;
-    width: 200px; /* Слегка уменьшили для мобильных, чтобы точно всё влезло */
+    width: 200px; 
     height: 270px; 
     margin: 0 auto 15px auto;
     border-radius: 25px; 
@@ -104,12 +104,12 @@ body::before{
     font-size:20px;
     color:white;
     opacity:0;
-    transition:1s;
+    transition:1.5s ease-in-out; /* Плавное проявление */
     text-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
 .show{ opacity:1 !important; }
 
-/* ИСПРАВЛЕНО: КНОПКА ПОЦЕЛУЯ ТЕПЕРЬ ВСЕГДА ТУТ */
+/* КНОПКА ПОЦЕЛУЯ */
 .kiss{
     font-size:75px;
     cursor:pointer;
@@ -156,7 +156,7 @@ body::before{
 
     <!-- КАРТОЧКА -->
     <div class="card">
-        <div class="title">Для моей девочки 💖</div>
+        <div class="title">Любимой 💖</div>
         
         <div class="photo-slider">
             <img src="./img1.jpg" class="active" alt="Фото 1">
@@ -173,12 +173,13 @@ body::before{
             Нажми на 💋 внизу экрана... ✨
         </div>
         
+        <!-- Изначально скрытый финальный текст -->
         <div id="loveText">
             Я тебя люблю очень сильно 😘❤️
         </div>
     </div>
 
-    <!-- ПОЦЕЛУЙ (ТЕПЕРЬ СРАЗУ ПОД КАРТОЧКОЙ) -->
+    <!-- ПОЦЕЛУЙ -->
     <div class="kiss" onclick="startLove()">💋</div>
 
 </div>
@@ -188,7 +189,7 @@ const music = document.getElementById("music");
 const loveText = document.getElementById("loveText");
 const lyricsText = document.getElementById("lyricsText");
 
-/* ЗАПУСК МУЗЫКИ И ТЕКСТА */
+/* ЗАПУСК МУЗЫКИ */
 async function startLove(){
     try{
         music.currentTime = 0;
@@ -196,10 +197,9 @@ async function startLove(){
     }catch(err){
         console.log(err);
     }
-    loveText.classList.add("show");
 }
 
-/* СИНХРОНИЗАЦИЯ СЛОВ ПЕСНИ */
+/* СИНХРОНИЗАЦИЯ СЛОВ ПЕСНИ И АВТО-ПРОЯВЛЕНИЯ ТЕКСТА */
 const lyrics = [
     { time: 0.0, text: "В свете фонаря блестит асфальт… " },
     { time: 3.0, text: "Я люблю тебя — ты просто знай… 💖" },
@@ -224,6 +224,13 @@ music.addEventListener("timeupdate", () => {
     
     if (lyricsText.innerHTML !== activeText) {
         lyricsText.innerHTML = activeText;
+    }
+
+    /* ИЗМЕНЕНО: Появление нижней надписи строго на 24-й секунде */
+    if (curTime >= 24.0) {
+        loveText.classList.add("show");
+    } else {
+        loveText.classList.remove("show"); // Скрывает обратно, если трек перезапустили
     }
 });
 
